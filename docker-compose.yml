@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: pg_monitor_test_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pg_monitor_test
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql.conf:/etc/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
+
+  test-runner:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      PG_DATABASE: pg_monitor_test
+      PG_USER: postgres
+      PG_PASSWORD: password
+      PG_HOST: postgres
+      PG_PORT: 5432
+    volumes:
+      - .:/app
+    entrypoint: ["bash", "-c", "bundle exec rspec"]
