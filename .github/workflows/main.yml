@@ -11,6 +11,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }}
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: pg_monitor_test
+          POSTGRES_INITDB_ARGS: "-c shared_preload_libraries='pg_stat_statements' -c pg_stat_statements.track=all"
+        ports:
+          - 5432:5432
+        volumes:
+          - ./postgresql.conf:/etc/postgresql.conf
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
     strategy:
       matrix:
         ruby:
@@ -18,10 +36,37 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - name: Run the default task
-      run: bundle exec rake
+
+    - name: Install dependencies
+      run: bundle install
+
+    - name: Wait for PostgreSQL
+      run: |
+        echo "Waiting for PostgreSQL to be ready..."
+        for i in {1..10}; do
+          pg_isready -h localhost -U postgres && break
+          echo "PostgreSQL not ready, retrying in 3 seconds..."
+          sleep 3
+        done
+        
+    - name: Create pg_stat_statements extension
+      run: |
+        PGPASSWORD=password psql -h localhost -U postgres -d pg_monitor_test -c "CREATE EXTENSION IF NOT EXISTS pg_stat_statements;"
+        
+    - name: Check pg_stat_statements is enabled
+      run: |
+        PGPASSWORD=password psql -h localhost -U postgres -d pg_monitor_test -c "SELECT * FROM pg_stat_statements LIMIT 1;"
+      
+    - name: Run tests
+      env:
+        PG_DATABASE: pg_monitor_test
+        PG_USER: postgres
+        PG_PASSWORD: password
+        PG_HOST: localhost
+      run: bundle exec rspec
