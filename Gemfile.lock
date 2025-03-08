@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pg_monitor (0.1.0)
+    pg_monitor (0.1.1)
       pg
 
 GEM
