@@ -7,7 +7,7 @@ It would integrate seamlessly with a Rails application in the future, and would 
 
 - View index usage statistics (last used, scan count, etc.)
 - Identify slow queries using `pg_stat_statements`
-- [TBD] Works with the existing Rails database configuration
+- Works with the existing Rails database configuration
 - [TBD] Provides a simple HTML interface for monitoring
 
 ## Installation
@@ -49,6 +49,13 @@ Restart PostgreSQL after making the changes:
 ```sh
 sudo systemctl restart postgresql
 ```
+
+Ensure that the extension is enabled in your database:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+```
+Execute the above SQL query by connecting to your database using `psql` or any other client.
 
 ## Usage
 
