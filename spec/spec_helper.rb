@@ -2,23 +2,17 @@
 
 require "pg"
 require "pg_monitor"
+require "ostruct"
 
-# Configure a test DB connection
-module TestDBConnection
-  def self.connection
-    @connection ||= PG.connect(
-      dbname: ENV.fetch("PG_DATABASE", "pg_monitor_test"),
-      user: ENV.fetch("PG_USER", "postgres"),
-      password: ENV.fetch("PG_PASSWORD", "password"),
-      host: ENV.fetch("PG_HOST", "localhost"),
-      port: ENV.fetch("PG_PORT", "5432")
-    )
-  end
-end
+ENV["PG_DATABASE"] = "pg_monitor_test"
+ENV["PG_USER"] = "postgres"
+ENV["PG_PASSWORD"] = "password"
+ENV["PG_HOST"] = "localhost"
+ENV["PG_PORT"] = "5432"
 
 # Ensure test DB exists
 def setup_test_db
-  conn = TestDBConnection.connection
+  conn = PgMonitor::DBConnection.connection
   conn.exec("CREATE EXTENSION IF NOT EXISTS pg_stat_statements;") # Enable tracking for slow queries
   conn.exec("CREATE TABLE IF NOT EXISTS test_table (id SERIAL PRIMARY KEY, data TEXT);")
   conn.exec("CREATE INDEX IF NOT EXISTS test_index ON test_table (data);")
@@ -35,5 +29,10 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  # Clear DB connection between tests to avoid leaking doubles
+  config.before do
+    PgMonitor::DBConnection.clear_connection! if defined?(PgMonitor::DBConnection)
   end
 end
