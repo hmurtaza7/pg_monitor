@@ -1,7 +1,9 @@
 require_relative "db_connection"
 
 module PgMonitor
-  class SlowQueries
+  module SlowQueries
+    module_function
+
     def fetch(limit: 10)
       query = <<~SQL
         SELECT 

@@ -1,7 +1,9 @@
 require_relative "db_connection"
 
 module PgMonitor
-  class IndexUsage
+  module IndexUsage
+    module_function
+
     def fetch
       query = <<~SQL
         SELECT 

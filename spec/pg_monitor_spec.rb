@@ -8,8 +8,7 @@ end
 
 RSpec.describe PgMonitor::IndexUsage do
   it "fetches index usage statistics" do
-    index_usage = PgMonitor::IndexUsage.new
-    stats = index_usage.fetch
+    stats = PgMonitor::IndexUsage.fetch
 
     expect(stats).to be_an(Array)
     expect(stats.first).to have_key("table_name")
@@ -19,8 +18,7 @@ end
 
 RSpec.describe PgMonitor::SlowQueries do
   it "fetches slow queries" do
-    slow_queries = PgMonitor::SlowQueries.new
-    stats = slow_queries.fetch(limit: 5)
+    stats = PgMonitor::SlowQueries.fetch(limit: 5)
 
     expect(stats).to be_an(Array)
     expect(stats.first).to have_key("query")
