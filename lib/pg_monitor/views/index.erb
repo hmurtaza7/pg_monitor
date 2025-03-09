@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PgMonitor</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .tab {
+      display: none;
+    }
+    .tab.active {
+      display: block;
+    }
+    .tab-buttons {
+      margin-bottom: 10px;
+    }
+    .tab-buttons button {
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+</head>
+<body>
+  <div class="tab-buttons">
+    <button onclick="showTab('index-usage')">Index Usage</button>
+    <button onclick="showTab('slow-queries')">Slow Queries</button>
+  </div>
+
+  <div id="index-usage" class="tab active">
+    <h1>Index Usage Statistics</h1>
+    <table>
+      <tr>
+        <th>Table Name</th>
+        <th>Index Name</th>
+        <th>Index Scan Count</th>
+        <th>Tuples Read</th>
+        <th>Tuples Fetched</th>
+        <th>Last Index Scan</th>
+        <th>Index Size</th>
+        <th>Total Index Size</th>
+      </tr>
+      <% @index_usage.each do |row| %>
+        <tr>
+          <td><%= row["table_name"] %></td>
+          <td><%= row["index_name"] %></td>
+          <td><%= row["index_scan_count"] %></td>
+          <td><%= row["tuples_read"] %></td>
+          <td><%= row["tuples_fetched"] %></td>
+          <td><%= row["last_index_scan"] %></td>
+          <td><%= row["index_size"] %></td>
+          <td><%= row["total_index_size"] %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <div id="slow-queries" class="tab">
+    <h1>Slow Queries</h1>
+    <table>
+      <tr>
+        <th>Query</th>
+        <th>Calls</th>
+        <th>Total Time</th>
+        <th>Mean Time</th>
+        <th>Max Time</th>
+      </tr>
+      <% @slow_queries.each do |row| %>
+        <tr>
+          <td><%= row["query"] %></td>
+          <td><%= row["calls"] %></td>
+          <td><%= row["total_time"] %></td>
+          <td><%= row["mean_time"] %></td>
+          <td><%= row["max_time"] %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</body>
+</html>

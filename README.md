@@ -59,17 +59,19 @@ Execute the above SQL query by connecting to your database using `psql` or any o
 
 ## Usage
 
-Mount the engine in `config/routes.rb`:
+To run the PgMonitor, follow these steps:
 
-```ruby
-mount PgMonitor::Engine, at: '/pg_monitor'
-```
+1. Ensure you have all the dependencies installed:
+    ```sh
+    bundle install
+    ```
 
-Then, navigate to:
+2. Run the server using the Rake task:
+    ```sh
+    rake server
+    ```
 
-```
-http://localhost:3000/pg_monitor
-```
+3. The application should now be running. You can access it in your web browser at `http://localhost:4567`.
 
 ### Programmatic Access
 
