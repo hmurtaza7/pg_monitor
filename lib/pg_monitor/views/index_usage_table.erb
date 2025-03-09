@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>Table Name</th>
+      <th>Index Name</th>
+      <th>Index Scan Count</th>
+      <th>Tuples Read</th>
+      <th>Tuples Fetched</th>
+      <th>Last Index Scan</th>
+      <th>Index Size</th>
+      <th>Total Index Size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% index_usage.each do |row| %>
+      <tr>
+        <td><%= row["table_name"] %></td>
+        <td><%= row["index_name"] %></td>
+        <td><%= row["index_scan_count"] %></td>
+        <td><%= row["tuples_read"] %></td>
+        <td><%= row["tuples_fetched"] %></td>
+        <td><%= row["last_index_scan"] %></td>
+        <td><%= row["index_size"] %></td>
+        <td><%= row["total_index_size"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -7,8 +7,8 @@ It would integrate seamlessly with a Rails application in the future, and would 
 
 - View index usage statistics (last used, scan count, etc.)
 - Identify slow queries using `pg_stat_statements`
-- Works with the existing Rails database configuration
-- [TBD] Provides a simple HTML interface for monitoring
+- Works with existing Rails database configuration, if present
+- Provides a simple HTML interface for monitoring
 
 ## Installation
 

@@ -1,0 +1,35 @@
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>Query</th>
+      <th>Calls</th>
+      <th>Total Time</th>
+      <th>Mean Time</th>
+      <th>Max Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% slow_queries.each do |row| %>
+      <tr>
+        <td>
+          <% full_query = row["query"] %>
+          <% if full_query.length > 100 %>
+            <span class="query-short" data-full-query="<%= ERB::Util.html_escape full_query %>">
+              <%= full_query[0, 100] %>...
+            </span>
+            <a href="#" class="show-more"
+               onclick="var el = this.previousElementSibling; el.textContent = el.getAttribute('data-full-query'); this.style.display='none'; return false;">
+              show more
+            </a>
+          <% else %>
+            <%= full_query %>
+          <% end %>
+        </td>
+        <td><%= row["calls"] %></td>
+        <td><%= row["total_time"] %></td>
+        <td><%= row["mean_time"] %></td>
+        <td><%= row["max_time"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
