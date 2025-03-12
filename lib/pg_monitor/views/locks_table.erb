@@ -1,0 +1,44 @@
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>Lock Type</th>
+      <th>Database</th>
+      <th>Relation</th>
+      <th>Page</th>
+      <th>Tuple</th>
+      <th>Virtual XID</th>
+      <th>Transaction ID</th>
+      <th>Class ID</th>
+      <th>Object ID</th>
+      <th>Object Sub ID</th>
+      <th>Virtual Transaction</th>
+      <th>PID</th>
+      <th>Mode</th>
+      <th>Granted</th>
+      <th>Fast Path</th>
+      <th>Wait Start</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @locks.each do |row| %>
+      <tr>
+        <td><%= row["locktype"] %></td>
+        <td><%= row["database"] %></td>
+        <td><%= row["relation"] %></td>
+        <td><%= row["page"] %></td>
+        <td><%= row["tuple"] %></td>
+        <td><%= row["virtualxid"] %></td>
+        <td><%= row["transactionid"] %></td>
+        <td><%= row["classid"] %></td>
+        <td><%= row["objid"] %></td>
+        <td><%= row["objsubid"] %></td>
+        <td><%= row["virtualtransaction"] %></td>
+        <td><%= row["pid"] %></td>
+        <td><%= row["mode"] %></td>
+        <td><%= row["granted"] %></td>
+        <td><%= row["fastpath"] %></td>
+        <td><%= row["waitstart"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

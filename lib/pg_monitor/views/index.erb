@@ -29,6 +29,7 @@
       <button type="button" class="btn btn-primary" onclick="showTab('index-usage')">Index Usage</button>
       <button type="button" class="btn btn-secondary" onclick="showTab('slow-queries')">Slow Queries</button>
       <button type="button" class="btn btn-secondary" onclick="showTab('user-tables')">User Tables</button>
+      <button type="button" class="btn btn-secondary" onclick="showTab('locks')">Locks</button>
     </div>
 
     <div id="index-usage" class="tab active">
@@ -44,6 +45,11 @@
     <div id="user-tables" class="tab">
       <h1>User Tables Statistics</h1>
       <%= erb :user_tables_table, layout: false, locals: { user_tables: @user_tables } %>
+    </div>
+
+    <div id="locks" class="tab">
+      <h1>Locks</h1>
+      <%= erb :locks_table, layout: false, locals: { locks: @locks } %>
     </div>
   </div>
 </body>
