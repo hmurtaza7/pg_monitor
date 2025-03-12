@@ -85,6 +85,16 @@ PgMonitor::IndexUsage.fetch
 PgMonitor::SlowQueries.fetch(limit: 10)
 ```
 
+### **User Table Stats**
+```ruby
+PgMonitor::UserTables.fetch
+```
+
+### **Pg Locks**
+```ruby
+PgMonitor::PgLocks.fetch
+```
+
 ## Running Tests
 
 ### **1. Start PostgreSQL in Docker**
