@@ -1,0 +1,52 @@
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>Table Name</th>
+      <th>Seq Scan</th>
+      <th>Last Seq Scan</th>
+      <th>Seq Tup Read</th>
+      <th>Idx Scan</th>
+      <th>Last Idx Scan</th>
+      <th>Idx Tup Fetch</th>
+      <th>Tuples Inserted</th>
+      <th>Tuples Updated</th>
+      <th>Tuples Deleted</th>
+      <th>Live Tuples</th>
+      <th>Dead Tuples</th>
+      <th>Last Vacuum</th>
+      <th>Last Autovacuum</th>
+      <th>Last Analyze</th>
+      <th>Last Autoanalyze</th>
+      <th>Vacuum Count</th>
+      <th>Autovacuum Count</th>
+      <th>Analyze Count</th>
+      <th>Autoanalyze Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% user_tables.each do |row| %>
+      <tr>
+        <td><%= row["table_name"] %></td>
+        <td><%= row["seq_scan"] %></td>
+        <td><%= row["last_seq_scan"] %></td>
+        <td><%= row["seq_tup_read"] %></td>
+        <td><%= row["idx_scan"] %></td>
+        <td><%= row["last_idx_scan"] %></td>
+        <td><%= row["idx_tup_fetch"] %></td>
+        <td><%= row["n_tup_ins"] %></td>
+        <td><%= row["n_tup_upd"] %></td>
+        <td><%= row["n_tup_del"] %></td>
+        <td><%= row["n_live_tup"] %></td>
+        <td><%= row["n_dead_tup"] %></td>
+        <td><%= row["last_vacuum"] %></td>
+        <td><%= row["last_autovacuum"] %></td>
+        <td><%= row["last_analyze"] %></td>
+        <td><%= row["last_autoanalyze"] %></td>
+        <td><%= row["vacuum_count"] %></td>
+        <td><%= row["autovacuum_count"] %></td>
+        <td><%= row["analyze_count"] %></td>
+        <td><%= row["autoanalyze_count"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

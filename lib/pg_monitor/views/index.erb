@@ -28,6 +28,7 @@
     <div class="btn-group tab-buttons" role="group">
       <button type="button" class="btn btn-primary" onclick="showTab('index-usage')">Index Usage</button>
       <button type="button" class="btn btn-secondary" onclick="showTab('slow-queries')">Slow Queries</button>
+      <button type="button" class="btn btn-secondary" onclick="showTab('user-tables')">User Tables</button>
     </div>
 
     <div id="index-usage" class="tab active">
@@ -38,6 +39,11 @@
     <div id="slow-queries" class="tab">
       <h1>Slow Queries</h1>
       <%= erb :slow_queries_table, layout: false, locals: { slow_queries: @slow_queries } %>
+    </div>
+
+    <div id="user-tables" class="tab">
+      <h1>User Tables Statistics</h1>
+      <%= erb :user_tables_table, layout: false, locals: { user_tables: @user_tables } %>
     </div>
   </div>
 </body>
